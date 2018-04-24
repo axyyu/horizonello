@@ -10,10 +10,10 @@
 1. [Schema](#schema)
 1. [Project Layout](#project-layout)
 1. [API Endpoints](#api-endpoints)
-  1. [Get all lists](#get-all-lists)
-  1. [Get one list](#get-one-list)
-  1. [Create new list](#create-new-list)
-  1. [Update existing list](#update-existing-list)
+    1. [Get all lists](#get-all-lists)
+    1. [Get one list](#get-one-list)
+    1. [Create new list](#create-new-list)
+    1. [Update existing list](#update-existing-list)
 
 ## Intro
 
