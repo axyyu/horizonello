@@ -7,7 +7,12 @@
                 <h2 class="list-name" contenteditable="true" listid="{{id}}">{{name}}</h2>
                 <ul class="card-list">
                     {{#each cards}}
-                        <li class="card" contenteditable="true" listid="{{../id}}">{{this}}</li>
+                        <li class="card">
+                            <p contenteditable="true" listid="{{../id}}">{{this}}</p>
+                            <button onclick="deleteCard(this, {{../id}})">
+                                <span class="far fa-minus-square"></span>
+                            </button>
+                        </li>
                     {{/each}}
                     <li>
                         <button class="add-card" onclick="addNewCard({{id}})">

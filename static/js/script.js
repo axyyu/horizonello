@@ -31,12 +31,20 @@ function setupEditable(){
         sL.name = $(this).text();
         modifyList(sL);
     });
-    $('.card').on('blur', function(){
+    $('.card p').on('blur', function(){
         let sL = _.findWhere(myLists, {id:parseInt($(this).attr("listid"))});
-        let index = $(this).index();
+        let index = $(this).parent().index();
+        console.log(index);
         sL.cards[index] = $(this).text();
         modifyList(sL);
     });
+}
+function deleteCard(t, listId){
+    let sL = _.findWhere(myLists, {id:parseInt(listId)});
+    let index = $(t).parent().index();
+    console.log(index);
+    sL.cards.splice(index, 1);
+    modifyList(sL);
 }
 
 /*

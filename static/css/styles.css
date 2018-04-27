@@ -91,12 +91,21 @@ h1, h2, h3, h4, h5, p {
       padding: 0;
       list-style-type: none; }
       #list-container .card-list-container .card-list .card {
+        display: grid;
+        grid-template-columns: auto 10px;
+        grid-column-gap: 10px;
         outline: none;
         min-height: 22px;
         margin: 10px 0;
         padding: 10px;
         background: #f2f2f2;
         box-shadow: 0px 0px 20px rgba(37, 40, 61, 0.1); }
+        #list-container .card-list-container .card-list .card button {
+          border: none;
+          outline: none;
+          margin: 0;
+          padding: 0;
+          background: none; }
       #list-container .card-list-container .card-list .add-card {
         margin: 10px auto;
         padding: 0;

@@ -76,6 +76,10 @@ h1,h2,h3,h4,h5,p{
             list-style-type: none;
 
             .card{
+                display: grid;
+                grid-template-columns: auto 10px;
+                grid-column-gap: 10px;
+
                 outline: none;
                 min-height: 22px;
                 margin: 10px 0;
@@ -83,6 +87,14 @@ h1,h2,h3,h4,h5,p{
 
                 background: $white;
                 box-shadow: 0px 0px 20px rgba($black, .1);
+
+                button{
+                    border: none;
+                    outline: none;
+                    margin: 0;
+                    padding: 0;
+                    background: none;
+                }
             }
 
             .add-card{
