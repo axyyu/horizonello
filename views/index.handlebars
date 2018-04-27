@@ -1,6 +1,26 @@
-<h1>Your HTML code here</h1>
+<h1><span class="far fa-clipboard"></span> Board</h1>
 
-<h2>Example lists</h2>
-Lists:
-<ul id="lists">
-</ul>
+<div id="list-container">
+    {{#if rows}}
+        {{#each rows}}
+            <div class="card-list-container">
+                <h2>{{name}}</h2>
+                <ul class="card-list">
+                    {{#each cards}}
+                        <li class="card">{{this}}</li>
+                    {{/each}}
+                    <li>
+                        <button class="add-card" onclick="addNewCard({{id}})">
+                            <span class="far fa-plus-square"></span>
+                        </button>
+                    <li>
+                </ul>
+            </div>
+        {{/each}}
+    {{else}}
+        <h1>No Lists.</h1>
+    {{/if}}
+    <button id="add-list" onclick="addNewList()">
+        <span class="far fa-plus-square"></span>
+    </button>
+</div>

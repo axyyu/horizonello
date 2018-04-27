@@ -1,0 +1,106 @@
+@import "vars";
+@import "header";
+@import "footer";
+
+html, body{
+    margin: 0;
+    background: $white;
+    font-family: 'Open Sans', sans-serif !important;
+    color: $black;
+}
+h1,h2,h3,h4,h5,p{
+    margin: 0;
+}
+
+#body-container{
+    min-height: calc(100vh - 130px);
+
+    h1{
+        padding: 50px;
+    }
+    span{
+        margin-right: 10px;
+    }
+}
+
+/*
+    View Lists
+*/
+#list-container{
+    display: flex;
+    justify-content: flex-start;
+    margin: 0 50px;
+
+    .card-list-container{
+        min-width: 200px;
+        width: 10vw;
+
+        margin: 0 20px;
+        padding: 10px 20px;
+        border-radius: 5px;
+
+        background-color: $blue;
+        box-shadow: 0px 0px 20px rgba($black, .1);
+
+        h2{
+            font-size: 1.5em;
+            font-weight: 300;
+
+            margin: 10px 0;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+            
+            border-bottom: 2px solid $purple;
+        }
+
+        .card-list{
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+
+            .card{
+                margin: 10px 0;
+                padding: 10px;
+                background: $white;
+                box-shadow: 0px 0px 20px rgba($black, .1);
+            }
+
+            .add-card{
+                margin: 10px auto;
+                padding: 0;
+
+                border: none;
+                outline: none;
+
+                font-size: 1.5em;
+
+                background: none;
+                // border: 5px solid $pearl;
+
+                span{
+                    margin: 0 auto;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    #add-list{
+        margin: 20px 50px;
+        border: none;
+        outline: none;
+
+        font-size: 2em;
+
+        background: none;
+        // border: 5px solid $pearl;
+
+        span{
+            margin: 0 auto;
+            cursor: pointer;
+        }
+    }
+}
+
+/*
+    Modal
+*/

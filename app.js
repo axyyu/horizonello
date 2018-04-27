@@ -10,6 +10,13 @@ var _ = require('underscore');
 // Local dependencies
 var storage = require('./storage');
 
+// gulp setup
+console.log("Setting up gulp");
+var gulp = require('gulp');
+require('./gulpfile');
+gulp.watch('./dev/sass/**/*.scss',['sass']);
+console.log("Running gulp process");
+
 var app = express();
 
 // Locate layouts and partials
@@ -32,7 +39,8 @@ app.use(bodyParser.json())
 
 // Index Page
 app.get('/', function(request, response, next) {
-  response.render('index');
+    var result = storage.getAll('list');
+    response.render( 'index', {rows:result} );
 });
 
 // Entity functions

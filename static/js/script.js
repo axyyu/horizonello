@@ -1,6 +1,32 @@
 'use strict';
-// Your client side JavaScript code goes here.
-// This file is included in every page.
+
+function addNewList(){
+    $.ajax('/api/lists', {
+      type: 'POST',
+      data: {
+        name: "New List",
+        pos: $("#list-container").children().length,
+        cards: []
+      }
+    })
+    .then(function(res){
+        location.reload();
+    });
+}
+function addNewCard(listId){
+    console.log(listId);
+    // $.ajax('/api/lists', {
+    //   type: 'POST',
+    //   data: {
+    //     name: "New List",
+    //     pos: $("#list-container").children().length,
+    //     cards: []
+    //   }
+    // })
+    // .then(function(res){
+    //     console.log(res)
+    // });
+}
 
 // Example code for creating a list on the server
 function createList(name, pos, cards) {
