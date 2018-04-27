@@ -59,6 +59,7 @@ h1,h2,h3,h4,h5,p{
         box-shadow: 0px 0px 20px rgba($black, .1);
 
         h2{
+            outline: none;
             font-size: 1.5em;
             font-weight: 300;
 
@@ -75,6 +76,7 @@ h1,h2,h3,h4,h5,p{
             list-style-type: none;
 
             .card{
+                outline: none;
                 min-height: 22px;
                 margin: 10px 0;
                 padding: 10px;

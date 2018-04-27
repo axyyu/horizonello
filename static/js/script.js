@@ -7,28 +7,48 @@ $(document).ready(function(){
     scrollToEnd();
     obtainLists();
     console.log(myLists);
+
+    setupEditable();
 });
 function scrollToEnd() {
     var scrollWidth = $("#body-container").get(0).scrollWidth;
     var clientWidth = $("#body-container").get(0).clientWidth;
     $("#body-container").animate({ scrollLeft: scrollWidth - clientWidth },
     {
-        duration: 100,
+        duration: 0,
         complete: function () {
         }
     });
 };
+function setupEditable(){
+    $('.list-name').on('keyup paste input', function(e) {
+        if(e.which == 13) {
+            $('.list-name').blur();
+        }
+        return e.which != 13;
+    }).on('blur', function(){
+        let sL = _.findWhere(myLists, {id:parseInt($(this).attr("listid"))});
+        sL.name = $(this).text();
+        modifyList(sL);
+    });
+    $('.card').on('blur', function(){
+        let sL = _.findWhere(myLists, {id:parseInt($(this).attr("listid"))});
+        let index = $(this).index();
+        sL.cards[index] = $(this).text();
+        modifyList(sL);
+    });
+}
 
 /*
     Multiple Use Endpoints
 */
-function modifyList(name, pos, cards, id){
-    $.ajax('/api/lists/'+id, {
+function modifyList(sL){
+    $.ajax('/api/lists/'+sL.id, {
       type: 'POST',
       data: {
-        name: name,
-        pos: pos,
-        cards: cards
+        name: sL.name,
+        pos: sL.pos,
+        cards: sL.cards
       }
     })
     .then(function(res){
@@ -75,6 +95,6 @@ function addNewCard(listId){
         sL.cards = ["hello"]
     }
     if ( sL ){
-        modifyList(sL.name, sL.pos, sL.cards, sL.id);
+        modifyList(sL);
     }
 }
