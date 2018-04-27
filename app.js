@@ -40,6 +40,7 @@ app.use(bodyParser.json())
 // Index Page
 app.get('/', function(request, response, next) {
     var result = storage.getAll('list');
+    result = _.sortBy(result, 'pos');
     response.render( 'index', {rows:result} );
 });
 
@@ -75,7 +76,7 @@ app.use('/api/lists', listApiRouter);
 // contents of fields.
 var LIST_FIELDS = {
   name: function(name) {
-    return name && _.isString(name) && name.length;
+    return !! name && _.isString(name) && name.length;
   },
   pos: _.isNumber,
   cards: function(cards) {
@@ -119,6 +120,7 @@ listApiRouter.post('/', function(req, resp, next) {
 listApiRouter.post('/:id', function(req, resp, next) {
   var fields = getFields(LIST_FIELDS, req.body);
   fields.pos = parseInt(fields.pos);
+  fields.id = parseInt(req.params.id);
   if (! isValid(LIST_FIELDS, fields)) {
     resp.status(400).end();
   } else {

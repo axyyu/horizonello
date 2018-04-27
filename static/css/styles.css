@@ -44,7 +44,9 @@ h1, h2, h3, h4, h5, p {
   margin: 0; }
 
 #body-container {
-  min-height: calc(100vh - 130px); }
+  min-height: calc(100vh - 130px);
+  max-width: 100%;
+  overflow-x: scroll; }
   #body-container h1 {
     padding: 50px; }
   #body-container span {
@@ -56,7 +58,15 @@ h1, h2, h3, h4, h5, p {
 #list-container {
   display: flex;
   justify-content: flex-start;
-  margin: 0 50px; }
+  padding: 0 50px;
+  width: fit-content; }
+  #list-container #no-list h2 {
+    font-size: 2em; }
+  #list-container #no-list h3 {
+    font-size: 1.5em;
+    font-weight: 300; }
+  #list-container #no-list #add-list {
+    margin: 20px 0; }
   #list-container .card-list-container {
     min-width: 200px;
     width: 10vw;
@@ -77,6 +87,7 @@ h1, h2, h3, h4, h5, p {
       padding: 0;
       list-style-type: none; }
       #list-container .card-list-container .card-list .card {
+        min-height: 22px;
         margin: 10px 0;
         padding: 10px;
         background: #f2f2f2;

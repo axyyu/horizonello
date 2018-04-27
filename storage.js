@@ -93,6 +93,8 @@ function getOne(kind, id) {
 // * If 'row' has no 'id' or if there's no other row with the same id, a row is
 //   inserted into our data storage layer.
 function upsert(kind, row) {
+    console.log(kind);
+    console.log(row);
   if (row.id && ! _.isNumber(row.id)) {
     throw new Error('Id must be number');
   }

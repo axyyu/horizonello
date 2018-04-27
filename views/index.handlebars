@@ -17,10 +17,18 @@
                 </ul>
             </div>
         {{/each}}
+        <button id="add-list" onclick="addNewList()">
+            <span class="far fa-plus-square"></span>
+        </button>
     {{else}}
-        <h1>No Lists.</h1>
+        <div id="no-list">
+            <h2>You currently have no lists available.</h2>
+            <h3>Add one by clicking the button below!</h3>
+            <button id="add-list" onclick="addNewList()">
+                <span class="far fa-plus-square"></span>
+            </button>
+        </div>
+
     {{/if}}
-    <button id="add-list" onclick="addNewList()">
-        <span class="far fa-plus-square"></span>
-    </button>
+
 </div>

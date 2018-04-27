@@ -1,5 +1,55 @@
 'use strict';
 
+// Global Vars
+var myLists;
+
+$(document).ready(function(){
+    scrollToEnd();
+    obtainLists();
+    console.log(myLists);
+});
+function scrollToEnd() {
+    var scrollWidth = $("#body-container").get(0).scrollWidth;
+    var clientWidth = $("#body-container").get(0).clientWidth;
+    $("#body-container").animate({ scrollLeft: scrollWidth - clientWidth },
+    {
+        duration: 100,
+        complete: function () {
+        }
+    });
+};
+
+/*
+    Multiple Use Endpoints
+*/
+function modifyList(name, pos, cards, id){
+    $.ajax('/api/lists/'+id, {
+      type: 'POST',
+      data: {
+        name: name,
+        pos: pos,
+        cards: cards
+      }
+    })
+    .then(function(res){
+        location.reload();
+    });
+}
+
+function updateList(){
+    // modifyList();
+}
+function obtainLists(){
+    $.ajax('/api/lists', {
+      type: 'GET'
+    })
+    .then(function(res){
+        console.log(res);
+        myLists = res.rows;
+        console.log(myLists);
+    });
+}
+
 function addNewList(){
     $.ajax('/api/lists', {
       type: 'POST',
@@ -15,71 +65,16 @@ function addNewList(){
 }
 function addNewCard(listId){
     console.log(listId);
-    // $.ajax('/api/lists', {
-    //   type: 'POST',
-    //   data: {
-    //     name: "New List",
-    //     pos: $("#list-container").children().length,
-    //     cards: []
-    //   }
-    // })
-    // .then(function(res){
-    //     console.log(res)
-    // });
-}
+    console.log(myLists);
+    let sL = _.findWhere(myLists, {id:parseInt(listId)});
 
-// Example code for creating a list on the server
-function createList(name, pos, cards) {
-  return $.ajax('/api/lists', {
-    type: 'POST',
-    data: {
-      name: name,
-      pos: pos,
-      cards: cards
+    if(sL.cards){
+        sL.cards.push("hello");
     }
-  });
-}
-
-// Example code for getting all `list`s from server
-function loadLists() {
-  return $.ajax('/api/lists');
-}
-
-// Example code for displaying lists in the browser
-function displayLists(lists) {
-  // Lists should be ordered based on their 'pos' field
-  lists.rows = _.sortBy(lists.rows, 'pos');
-  lists.rows.forEach(function(list) {
-    var curElem = $('<li>').text(list.name);
-    if (list.cards) {
-      var innerUl = $('<ul>');
-      list.cards.forEach(function(card) {
-        innerUl.append($('<li>').text(card));
-      });
-      curElem.append(innerUl);
+    else{
+        sL.cards = ["hello"]
     }
-    $('#lists').append(curElem);
-  });
-}
-
-loadLists()
-  .then(function(data) {
-    console.log('Lists', data.rows);
-    if (data.rows.length) {
-      // If some lists are found display them
-      displayLists(data);
-    } else {
-      // If no lists are found, create sample list
-      // and re-display.
-      console.log('No lists found, creating one.');
-      createList('Hello', 0, ['Card 1', 'Card 2'])
-        .then(function(list) {
-          console.log('Created list', list);
-          return loadLists();
-        })
-        .then(function(lists) {
-          displayLists(lists);
-        })
+    if ( sL ){
+        modifyList(sL.name, sL.pos, sL.cards, sL.id);
     }
-
-  });
+}
