@@ -46,6 +46,14 @@ function deleteCard(t, listId){
     sL.cards.splice(index, 1);
     modifyList(sL);
 }
+function allowDropCard(e){
+    e.preventDefault();
+}
+function dropCard(e){
+    e.preventDefault();
+    var data = e.dataTransfer.getData("text");
+    console.log(data);
+}
 
 /*
     Multiple Use Endpoints

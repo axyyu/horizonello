@@ -5,9 +5,9 @@
         {{#each rows}}
             <div class="card-list-container">
                 <h2 class="list-name" contenteditable="true" listid="{{id}}">{{name}}</h2>
-                <ul class="card-list">
+                <ul class="card-list" ondrop="dropCard(event)" ondragover="allowDropCard(event)">
                     {{#each cards}}
-                        <li class="card">
+                        <li class="card" draggable="true">
                             <p contenteditable="true" listid="{{../id}}">{{this}}</p>
                             <button onclick="deleteCard(this, {{../id}})">
                                 <span class="far fa-minus-square"></span>
