@@ -11,6 +11,9 @@ html, body{
 h1,h2,h3,h4,h5,p{
     margin: 0;
 }
+.hide{
+    transform:translateX(-9999px);
+}
 
 #body-container{
     min-height: calc(100vh - 130px);

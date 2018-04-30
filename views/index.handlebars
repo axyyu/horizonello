@@ -5,17 +5,17 @@
         {{#each rows}}
             <div class="card-list-container">
                 <h2 class="list-name" contenteditable="true" listid="{{id}}">{{name}}</h2>
-                <ul class="card-list" ondrop="dropCard(event)" ondragover="allowDropCard(event)">
+                <ul class="card-list" listid="{{id}}" ondrop="dropCard(event)" ondragover="allowDropCard(event)">
                     {{#each cards}}
-                        <li class="card" draggable="true">
+                        <li class="card" listid="{{../id}}" draggable="true" ondragstart="dragCard(event)" ondragend="endDragCard(event)">
                             <p contenteditable="true" listid="{{../id}}">{{this}}</p>
                             <button onclick="deleteCard(this, {{../id}})">
                                 <span class="far fa-minus-square"></span>
                             </button>
                         </li>
                     {{/each}}
-                    <li>
-                        <button class="add-card" onclick="addNewCard({{id}})">
+                    <li listid="{{id}}">
+                        <button class="add-card" listid="{{id}}" onclick="addNewCard({{id}})">
                             <span class="far fa-plus-square"></span>
                         </button>
                     </li>

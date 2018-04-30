@@ -2,11 +2,11 @@
 
 // Global Vars
 var myLists;
+var draggedCardList;
 
 $(document).ready(function(){
     scrollToEnd();
     obtainLists();
-    console.log(myLists);
 
     setupEditable();
 });
@@ -34,7 +34,6 @@ function setupEditable(){
     $('.card p').on('blur', function(){
         let sL = _.findWhere(myLists, {id:parseInt($(this).attr("listid"))});
         let index = $(this).parent().index();
-        console.log(index);
         sL.cards[index] = $(this).text();
         modifyList(sL);
     });
@@ -42,17 +41,59 @@ function setupEditable(){
 function deleteCard(t, listId){
     let sL = _.findWhere(myLists, {id:parseInt(listId)});
     let index = $(t).parent().index();
-    console.log(index);
     sL.cards.splice(index, 1);
     modifyList(sL);
 }
 function allowDropCard(e){
     e.preventDefault();
 }
+function dragCard(e){
+    e.dataTransfer.setData("html", e.target.outerHTML);
+    setTimeout(function(){
+    	e.target.classList.add('hide');
+    });
+}
+function endDragCard(e){
+    let listId = $(e.srcElement).attr("listid");
+    let sL = _.findWhere(myLists, {id:parseInt(listId)});
+    let index = $(e.srcElement).index();
+    sL.cards.splice(index, 1);
+
+    $(e.srcElement).remove();
+    updateLists(sL, draggedCardList);
+}
+
 function dropCard(e){
     e.preventDefault();
-    var data = e.dataTransfer.getData("text");
-    console.log(data);
+    var data = e.dataTransfer.getData("html");
+    let parent = $(e.target).parents("ul")[0];
+    if(parent == null){
+        if($(e.target).prop("tagName") === "UL"){
+            parent = $(e.target);
+            parent.prepend($(data));
+        }
+    }
+    else{
+        let p = e.target;
+        if($(p).prop("tagName") === "LI"){
+            $(p).before($(data));
+        }
+        else{
+            p = $(p).parent("li")[0];
+            $(p).before($(data));
+        }
+
+        let listId = $(p).attr("listid");
+        let sL = _.findWhere(myLists, {id:parseInt(listId)});
+        let index = $(p).index();
+        if(sL.cards){
+            sL.cards.splice(index, 0, $(data).children("p").text());
+        }
+        else{
+            sL.cards = [$(data).children("p").text()]
+        }
+        draggedCardList = sL;
+    }
 }
 
 /*
@@ -72,9 +113,20 @@ function modifyList(sL){
     });
 }
 
-function updateList(){
-    // modifyList();
+// For Multiple List Updates
+function updateLists(oneL, twoL){
+    $.ajax('/api/lists/'+oneL.id, {
+      type: 'POST',
+      data: {
+        name: oneL.name,
+        pos: oneL.pos,
+        cards: oneL.cards
+      }
+  }).done(function(res){
+      modifyList(twoL);
+  });
 }
+
 function obtainLists(){
     $.ajax('/api/lists', {
       type: 'GET'
@@ -105,10 +157,10 @@ function addNewCard(listId){
     let sL = _.findWhere(myLists, {id:parseInt(listId)});
 
     if(sL.cards){
-        sL.cards.push("hello");
+        sL.cards.push("new");
     }
     else{
-        sL.cards = ["hello"]
+        sL.cards = ["new"]
     }
     if ( sL ){
         modifyList(sL);
