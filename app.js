@@ -139,7 +139,7 @@ listApiRouter.post('/:id', function(req, resp, next) {
 listApiRouter.delete('/:id', function(req, resp, next) {
     var result = storage.getOne('list', parseInt(req.params.id));
     if (result){
-        resp.json(storage.del('list', parseInt(req.params.id));
+        resp.json(storage.del('list', parseInt(req.params.id)));
     }
     else{
         resp.status(404).end();
