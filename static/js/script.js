@@ -144,6 +144,14 @@ function moveListLeft(listId){
         updateLists(myLists[sL], myLists[nL]);
     }
 }
+function deleteList(listId){
+    $.ajax('/api/lists/'+listId, {
+      type: 'DELETE'
+    })
+    .then(function(res){
+        location.reload();
+    });
+}
 
 /*
     Multiple Use Endpoints
