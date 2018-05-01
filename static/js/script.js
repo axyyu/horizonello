@@ -54,13 +54,23 @@ function dragCard(e){
     });
 }
 function endDragCard(e){
-    let listId = $(e.srcElement).attr("listid");
-    let sL = _.findWhere(myLists, {id:parseInt(listId)});
-    let index = $(e.srcElement).index();
-    sL.cards.splice(index, 1);
+    if(draggedCardList){
+        console.log("LATE");
+        let listId = $(e.srcElement).attr("listid");
+        let sL = _.findWhere(myLists, {id:parseInt(listId)});
+        let index = $(e.srcElement).index();
+        console.log(index);
+        console.log(sL.cards);
+        sL.cards.splice(index, 1);
+        console.log(sL.cards);
 
-    $(e.srcElement).remove();
-    updateLists(sL, draggedCardList);
+        $(e.srcElement).remove();
+        updateLists(sL, draggedCardList);
+        draggedCardList = null;
+    }
+    setTimeout(function(){
+    	e.target.classList.remove('hide');
+    });
 }
 
 function dropCard(e){
@@ -86,13 +96,52 @@ function dropCard(e){
         let listId = $(p).attr("listid");
         let sL = _.findWhere(myLists, {id:parseInt(listId)});
         let index = $(p).index();
-        if(sL.cards){
-            sL.cards.splice(index, 0, $(data).children("p").text());
+
+        if(sL){
+            if(sL.cards){
+                console.log(index-1);
+                console.log("EARLY");
+                console.log(sL.cards);
+                sL.cards.splice(index-1, 0, $(data).children("p").text());
+                console.log(sL.cards);
+            }
+            else{
+                sL.cards = [$(data).children("p").text()]
+            }
+            draggedCardList = sL;
         }
-        else{
-            sL.cards = [$(data).children("p").text()]
-        }
-        draggedCardList = sL;
+    }
+}
+function moveListRight(listId){
+    let sL = _.findIndex(myLists, {id:parseInt(listId)});
+    let nL = sL + 1;
+
+    if(nL < myLists.length){
+        let tL = myLists[sL];
+        let tP = myLists[nL].pos;
+        myLists[nL].pos = myLists[sL].pos;
+        myLists[sL].pos = tP;
+        myLists.splice(sL, 1);
+        myLists.splice(nL, 0, tL);
+        console.log(myLists);
+
+        updateLists(myLists[sL], myLists[nL]);
+    }
+}
+function moveListLeft(listId){
+    let sL = _.findIndex(myLists, {id:parseInt(listId)});
+    let nL = sL - 1;
+
+    if(nL >= 0){
+        let tL = myLists[sL];
+        let tP = myLists[nL].pos;
+        myLists[nL].pos = myLists[sL].pos;
+        myLists[sL].pos = tP;
+        myLists.splice(sL, 1);
+        myLists.splice(nL, 0, tL);
+        console.log(myLists);
+
+        updateLists(myLists[sL], myLists[nL]);
     }
 }
 
@@ -133,7 +182,7 @@ function obtainLists(){
     })
     .then(function(res){
         console.log(res);
-        myLists = res.rows;
+        myLists = _.sortBy(res.rows, 'pos');
         console.log(myLists);
     });
 }

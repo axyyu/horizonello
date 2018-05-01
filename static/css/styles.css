@@ -81,6 +81,23 @@ h1, h2, h3, h4, h5, p {
     border-radius: 5px;
     background-color: #98DFEA;
     box-shadow: 0px 0px 20px rgba(37, 40, 61, 0.1); }
+    #list-container .card-list-container:nth-child(1) .list-buttons {
+      flex-direction: row-reverse; }
+    #list-container .card-list-container:nth-child(1) .move-left {
+      display: none; }
+    #list-container .card-list-container:nth-last-child(2) .move-right {
+      display: none; }
+    #list-container .card-list-container .list-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0; }
+      #list-container .card-list-container .list-buttons button {
+        outline: none;
+        border: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer; }
     #list-container .card-list-container h2 {
       outline: none;
       font-size: 1.5em;
@@ -109,16 +126,18 @@ h1, h2, h3, h4, h5, p {
           margin: 0;
           padding: 0;
           background: none; }
-      #list-container .card-list-container .card-list .add-card {
-        margin: 10px auto;
-        padding: 0;
-        border: none;
-        outline: none;
-        font-size: 1.5em;
-        background: none; }
-        #list-container .card-list-container .card-list .add-card span {
-          margin: 0 auto;
-          cursor: pointer; }
+      #list-container .card-list-container .card-list .list-options {
+        display: flex;
+        justify-content: space-between; }
+        #list-container .card-list-container .card-list .list-options button {
+          margin: 10px 0;
+          padding: 0;
+          border: none;
+          outline: none;
+          font-size: 1.5em;
+          background: none; }
+          #list-container .card-list-container .card-list .list-options button span {
+            cursor: pointer; }
   #list-container #add-list {
     margin: 20px 50px;
     border: none;

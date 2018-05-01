@@ -4,7 +4,17 @@
     {{#if rows}}
         {{#each rows}}
             <div class="card-list-container">
+                <div class="list-buttons">
+                    <button class="move-left" listid="{{id}}" onclick="moveListLeft({{id}})">
+                        <span class="far fa-caret-square-left"></span>
+                    </button>
+                    <button class="move-right" listid="{{id}}" onclick="moveListRight({{id}})">
+                        <span class="far fa-caret-square-right"></span>
+                    </button>
+                </div>
+
                 <h2 class="list-name" contenteditable="true" listid="{{id}}">{{name}}</h2>
+
                 <ul class="card-list" listid="{{id}}" ondrop="dropCard(event)" ondragover="allowDropCard(event)">
                     {{#each cards}}
                         <li class="card" listid="{{../id}}" draggable="true" ondragstart="dragCard(event)" ondragend="endDragCard(event)">
@@ -14,9 +24,13 @@
                             </button>
                         </li>
                     {{/each}}
-                    <li listid="{{id}}">
-                        <button class="add-card" listid="{{id}}" onclick="addNewCard({{id}})">
+                    <li class="list-options" listid="{{id}}">
+                        <button class="add-card" listid="{{id}}" onclick="addNewCard({{id}})" ondragover="return false">
                             <span class="far fa-plus-square"></span>
+                        </button>
+
+                        <button class="delete-list" listid="{{id}}" onclick="deleteList({{id}})" ondragover="return false">
+                            <span class="far fa-minus-square"></span>
                         </button>
                     </li>
                 </ul>

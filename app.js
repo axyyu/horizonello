@@ -118,15 +118,32 @@ listApiRouter.post('/', function(req, resp, next) {
 
 // POST /api/lists/:id Update existing list
 listApiRouter.post('/:id', function(req, resp, next) {
+    var result = storage.getOne('list', parseInt(req.params.id));
+    if (!result){
+      resp.status(404).end();
+    }
+
   var fields = getFields(LIST_FIELDS, req.body);
   fields.pos = parseInt(fields.pos);
   fields.id = parseInt(req.params.id);
+
   if (! isValid(LIST_FIELDS, fields)) {
     resp.status(400).end();
   } else {
     console.log('Update list', fields);
     resp.json(storage.upsert('list', fields));
   }
+});
+
+// DELETE /api/lists/:id Update existing list
+listApiRouter.delete('/api/lists/:id', function(req, resp, next) {
+    var result = storage.getOne('list', parseInt(req.params.id));
+    if (result){
+        resp.json(storage.del('list', req.params.id));
+    }
+    else{
+        resp.status(404).end();
+    }
 });
 
 // Start
